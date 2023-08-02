@@ -1,0 +1,11 @@
+version: '3'
+services:
+  db:
+    image: postgres:latest
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=householdpassword
+
+volumes:
+  db_data:

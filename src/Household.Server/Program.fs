@@ -6,6 +6,8 @@ open Microsoft.Extensions.Logging
 open Microsoft.Extensions.DependencyInjection
 open Giraffe
 
+open Household.Recipes
+
 let private configureLogging (builder: WebApplicationBuilder) =
     builder.Host.ConfigureLogging(fun x ->
         x.AddFilter<Microsoft.Extensions.Logging.ApplicationInsights.ApplicationInsightsLoggerProvider>(
@@ -26,6 +28,11 @@ let private configureWeb (builder: WebApplicationBuilder) =
     builder
 
 let private configureApp (app: WebApplication) =
+    let wholeApi =
+        choose [
+            WebApp.webApp
+            RecipesApi.httpHandler
+        ]
     app.UseStaticFiles() |> ignore
     app.UseGiraffe WebApp.webApp
     app
